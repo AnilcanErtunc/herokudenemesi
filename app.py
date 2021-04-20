@@ -1,4 +1,4 @@
-from flask import Flask ,request
+from flask import Flask ,request, jsonify
 
 
 
@@ -7,17 +7,17 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-   return "Hello World"
+   return '<h1>Hello html</h1>'
    
 
 
 @app.route("/yorum",methods = ["GET","POST"])
 def deneme():
-   if request.method == "POST":
-      return "Post yaptınız"
+   if request.method == "GET":
+      return '<h1>Hello html again</h1>'
    
    else:
-      return "Get yaptınız"  
+      return jsonify({'Sonuc' : 'true'}) 
 
 
 if __name__=="__main__":
