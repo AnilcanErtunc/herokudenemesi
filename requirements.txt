@@ -1,0 +1,4 @@
+flask
+flask_boostrap
+speech_recognition
+gunicorn
