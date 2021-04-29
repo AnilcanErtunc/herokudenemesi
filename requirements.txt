@@ -1,6 +1,5 @@
 flask
 psycopg2
 gunicorn
-string
 random
 dotenv
