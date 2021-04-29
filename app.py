@@ -64,6 +64,9 @@ def deneme():
       return '<h1>Hello html again</h1>'
   
 
+if __name__ == "__main__":
+    app.run(ssl_context='adhoc')
+  
          
 
 
