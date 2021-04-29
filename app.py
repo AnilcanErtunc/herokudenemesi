@@ -1,7 +1,6 @@
 from flask import Flask ,request, jsonify , json , make_response
 import psycopg2  
 import checkEmail , checkPassword , getAccountInfo , hasDoorAccess
-import test
 
 
 app = Flask(__name__)
@@ -58,19 +57,12 @@ def UrlHasDoorAccess():
 
 
 
-@app.route("/test",methods = ["GET","POST"])
+@app.route("/test",methods = ["GET"])
 def deneme():
    if request.method == "GET":
 
       return '<h1>Hello html again</h1>'
-   
-   elif request.method == "POST":
-
-      ParsedInfo = JsonParse()
-      
-      response = test.testfunc(ParsedInfo['email'])
-
-      return make_response(response)
+  
 
          
 
