@@ -1,44 +1,61 @@
-from flask import Flask ,request, jsonify , json
-import psycopg2
-
+from flask import Flask ,request, jsonify , json , make_response
+import psycopg2  
+import checkEmail , checkPassword , getAccountInfo , hasDoorAccess
+import test
 
 
 app = Flask(__name__)
 
 
 
-@app.route("/")
-def index():
 
-   connection = psycopg2.connect(
-    host=      ${{ secrets.HOST_NAME}}  ,
-    database=  ${{ secrets.DATABASE}}   ,
-    user=      ${{ secrets.USER}}       ,
-    password=  ${{ secrets.PASSWORD}})
-    
-    
-   try:
-      cursor = connection.cursor()
-      # Print PostgreSQL details
-      print("PostgreSQL server information")
-      print(connection.get_dsn_parameters(), "\n")
-      # Executing a SQL query
-      cursor.execute("SELECT version();")
-      # Fetch result
-      record = cursor.fetchone()
-      print("You are connected to - ", record, "\n")
+@app.route("/checkUser",methods = ["POST"])
+def UrlCheckUser():
+   if request.method == "POST":
+ 
+      ParsedEmail = JsonParse()
+      response = checkEmail.IsRegistered(ParsedEmail['email'])
 
-   except (Exception, Error) as error:
-      print("Error while connecting to PostgreSQL", error)
-   finally:
-      if (connection):
-         cursor.close()
-         connection.close()
-         print("PostgreSQL connection is closed")
+      return make_response(response)
 
 
-   return jsonify(Record = record)
-   
+@app.route("/checkPassword",methods = ["POST"])
+def UrlCheckPassword():
+   if request.method == "POST":
+      
+      ParsedInfo = JsonParse()
+      response = checkPassword.IsPasswordCorrect(ParsedInfo['email'] , ParsedInfo['password'] )
+
+      return make_response(response) 
+
+
+
+
+@app.route("/getAccountDetails",methods = ["POST"])
+def UrlGetAccountDetails():
+   if request.method == "POST":
+
+      ParsedInfo = JsonParse()    
+      response = getAccountInfo.accountInfoFunc(ParsedInfo['contactId'] , ParsedInfo['accountId'] )
+
+      return make_response(response) 
+
+
+
+
+@app.route("/hasDoorAccess",methods = ["POST"])
+def UrlHasDoorAccess():
+   if request.method == "POST":
+
+      ParsedInfo = JsonParse()    
+      response = hasDoorAccess.doorAccessFunc(ParsedInfo['contactId'] , ParsedInfo['accountId'] ,ParsedInfo['doorId'] )
+
+      return make_response(response) 
+
+
+
+
+
 
 
 @app.route("/test",methods = ["GET","POST"])
@@ -49,14 +66,55 @@ def deneme():
    
    elif request.method == "POST":
 
-      data = request.get_json()    
+      ParsedInfo = JsonParse()
+      
+      response = test.testfunc(ParsedInfo['email'])
 
-      kur = data['kur']   
+      return make_response(response)
 
-
-      return kur
          
+
+
+#Gelen isteklerin tümünün parse edilmesi işlemleri.
+
+def JsonParse():
+   data = request.get_json()
+
+   if data.get('mailAddress') != None :
+      userEmail = data['mailAddress']
+   else :
+      userEmail = None
+
+   if data.get('password') != None :
+      userPw = data['password']
+   else:
+      userPw = None
+
+   if data.get('accountId') != None :
+      accountId = data['accountId']
+   else:
+      accountId = None
+
+   if data.get('contactId') != None :
+      contactId = data['contactId']
+   else:
+      contactId = None
+
+   if data.get('doorId') != None :
+      doorId = data['doorId']
+   else:
+      doorId = None
+
+
+
+
+   return {'email' : userEmail , 'password' : userPw , 'accountId' : accountId , 'contactId' : contactId , 'doorId' : doorId }
+
+
+
+
 
 
 if __name__=="__main__":
     app.run(debug = True)
+
