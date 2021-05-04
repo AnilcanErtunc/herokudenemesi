@@ -36,8 +36,7 @@ def UrlGetAccountDetails():
 
       ParsedInfo = JsonParse()    
       response = getAccountInfo.accountInfoFunc(ParsedInfo['contactId'] , ParsedInfo['accountId'] )
-      
-      return "POST ISTEĞİ ALINDI"
+     
    
       return make_response(response) 
 
