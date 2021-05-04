@@ -9,7 +9,7 @@ def accountInfoFunc(contactId , accountId):
    if not accountId or not contactId  :
       return jsonify(status = "error",errorMsg = "invalid input" ) 
 
-   return str(os.environ('HOST'))
+   return "Host degeri :" + os.environ('HOST')
    
    
    
