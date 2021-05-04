@@ -8,20 +8,24 @@ def accountInfoFunc(contactId , accountId):
 
    if not accountId or not contactId  :
       return jsonify(status = "error",errorMsg = "invalid input" ) 
+   
 
-   return "Host degeri :" + str(os.environ('HOST'))
-   
-   
-   
-   connection = psycopg2.connect(
-   host=      os.environ('HOST') ,
-   database=  os.environ('DATABASE')   ,
-   user=      os.environ('USER')     ,
-   password= os.environ('PASSWORD')
-   )
-   
+
  
    try:
+      
+      
+      return "Host degeri :" + str(os.environ('HOST'))
+   
+   
+   
+      connection = psycopg2.connect(
+      host=      os.environ('HOST') ,
+      database=  os.environ('DATABASE')   ,
+      user=      os.environ('USER')     ,
+      password= os.environ('PASSWORD')
+      )
+
       cursor = connection.cursor()   
 
   
@@ -110,10 +114,10 @@ def accountInfoFunc(contactId , accountId):
      
 
          
-   except:
+   except Exception as e :
       return jsonify(status = "error",
-               errorMsg = "Sistemsel bir problem oluştu. Lütfen Smartoffice ile iletişime geçiniz."
-               )
+               errorMsg =  e                       
+               ) # "Sistemsel bir problem oluştu. Lütfen Smartoffice ile iletişime geçiniz."
 
    finally:
       if (connection):
