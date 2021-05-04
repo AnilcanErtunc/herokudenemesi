@@ -32,13 +32,13 @@ def UrlCheckPassword():
 
 @app.route("/getAccountDetails",methods = ["POST"])
 def UrlGetAccountDetails():
-   if request.method == "POST":
-      
-      return "POST ISTEĞİ ALINDI"
+   if request.method == "POST":     
 
       ParsedInfo = JsonParse()    
       response = getAccountInfo.accountInfoFunc(ParsedInfo['contactId'] , ParsedInfo['accountId'] )
-
+      
+      return "POST ISTEĞİ ALINDI"
+   
       return make_response(response) 
 
 
