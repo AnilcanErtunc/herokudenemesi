@@ -1,6 +1,5 @@
 from flask import jsonify , json 
 import psycopg2
-from dotenv import load_dotenv , find_dotenv
 import os
 
 
@@ -12,14 +11,13 @@ def accountInfoFunc(contactId , accountId):
 
    
    
-   load_dotenv(find_dotenv())
    
    
    connection = psycopg2.connect(
-   host=      os.environ.get("HOST") ,
-   database=  os.environ.get("DATABASE")   ,
-   user=      os.environ.get("USER")     ,
-   password= os.environ.get("PASSWORD")
+   host=      os.environ('HOST') ,
+   database=  os.environ('DATABASE')   ,
+   user=      os.environ('USER')     ,
+   password= os.environ('PASSWORD')
    )
    
  
